@@ -1,0 +1,18 @@
+1.create function - 
+for python- 
+aws --endpoint-url "http://localhost:4566" lambda create-function --function-name my-function --runtime python3.9 --role arn:aws:iam::000000000000:role/lambda-role --handler ImageReduce.lambda_handler --zip-file fileb://lambdafunction.zip
+
+for node-
+aws --endpoint-url "http://localhost:4566" lambda create-function --function-name my-function8 --runtime nodejs14.x --role arn:aws:iam::000000000000:role/lambda-role --handler prod.handler --zip-file fileb://lambda_function.zip 
+
+
+2.check what functions are there -
+aws --endpoint-url "http://localhost:4566" lambda list-functions --endpoint-url http://localhost:4566
+
+3.invoke function - 
+aws --endpoint-url "http://localhost:4566" lambda invoke --function-name my-function --payload fileb://input.json output.txt
+
+
+4. create function url-
+
+aws --endpoint-url "http://localhost:4566"  lambda create-function-url-config --function-name my-function8 --auth-type NONE

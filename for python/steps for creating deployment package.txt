@@ -1,0 +1,28 @@
+Steps for Creating and Packaging a Python Lambda Function with Dependencies in Windows
+
+1. Create a Python Virtual Environment:
+
+   python -m venv venv
+
+2. Activate the Virtual Environment:
+
+   .\venv\Scripts\activate
+
+3. pip install pillow
+
+4. mkdir package
+
+5. Copy the installed packages from your virtual environment to the package directory.
+  
+   xcopy /E /I venv\Lib\site-packages package\
+
+6. Add Your Lambda Function Code:
+
+   copy ImageReduce.py package\
+
+
+7. Zip the Deployment Package:
+
+   cd package
+   powershell Compress-Archive -Path * -DestinationPath ..\lambda_function.zip
+

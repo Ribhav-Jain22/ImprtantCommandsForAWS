@@ -1,0 +1,32 @@
+1. Start LocalStack:
+Make sure LocalStack is running:
+localstack start -d
+
+2. Create a Lambda Function:
+Assuming you already have a Lambda function (index.js) and a deployment package (my-function.zip), you can create the Lambda function:
+
+3. Create a REST API:(THE ID RETURNED IS THE - REST API ID or <rest-api-id>)
+aws apigateway create-rest-api --name MyRestApi --endpoint-url "http://localhost:4566"
+
+4.Get the Root Resource ID:(THE ID RETURNED IS THE - PARENT ID)
+aws apigateway get-resources --rest-api-id <rest-api-id> --endpoint-url "http://localhost:4566"
+
+5.Create a Resource:
+aws apigateway create-resource --rest-api-id <rest-api-id> --parent-id <parent-id> --path-part my-resource --endpoint-url "http://localhost:4566"
+
+6.Create a POST Method:
+aws apigateway put-method --rest-api-id <rest-api-id> --resource-id <resource-id> --http-method POST --authorization-type NONE --endpoint-url "http://localhost:4566"
+
+7.Integrate POST Method with Lambda:
+aws apigateway put-integration --rest-api-id <rest-api-id> --resource-id <resource-id> --http-method POST --type AWS_PROXY --integration-http-method POST --uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:000000000000:function:my-function/invocations --endpoint-url "http://localhost:4566"
+
+8.Grant API Gateway Permission to Invoke Lambda:
+aws lambda add-permission --function-name my-function --statement-id apigateway-access --action lambda:InvokeFunction --principal apigateway.amazonaws.com --source-arn arn:aws:execute-api:us-east-1:000000000000:<rest-api-id>/*/POST/my-resource --endpoint-url "http://localhost:4566"
+
+9.Deploy the API:
+aws apigateway create-deployment --rest-api-id <rest-api-id> --stage-name dev --endpoint-url "http://localhost:4566"
+
+FOR TESTING THE API OR INVOKING THE LAMBDA FUNCTION THROUGH THIS API -
+http://localhost:4566/restapis/<rest-api-id>/dev/_user_request_/my-resource
+
+

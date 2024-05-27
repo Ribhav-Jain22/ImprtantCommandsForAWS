@@ -1,0 +1,35 @@
+1.List all objects in the bucket:
+
+aws --endpoint-url=http://localhost:4566 s3 ls s3://your-bucket-name
+
+
+2. Get the content of a specific object in the bucket:
+
+aws --endpoint-url=http://localhost:4566 s3 cp s3://your-bucket-name/example-file.txt -
+
+3. Download a specific object from the bucket to another location:
+
+aws --endpoint-url=http://localhost:4566 s3 cp s3://your-bucket-name/example-file.txt /path/to/local/directory/
+
+lets say i want to save the contents of example-file.txt to a file New Text Document.txt located in desktop:
+aws --endpoint-url=http://localhost:4566 s3 cp s3://sample-bucket/example-file.txt "C:\Users\Ribhav\Desktop\New Text Document.txt"
+
+
+4. Delete a specific object from the bucket:
+
+aws --endpoint-url=http://localhost:4566 s3 rm s3://your-bucket-name/example-file.txt
+
+5. Delete the entire bucket (including all objects):
+
+aws --endpoint-url=http://localhost:4566 s3 rb s3://your-bucket-name --force
+
+6.  Create an S3 Bucket:
+aws s3api create-bucket --bucket sample-bucket --endpoint-url http://localhost:4566
+
+7. list all the buckets present:
+aws s3api list-buckets --endpoint-url http://localhost:4566
+
+
+
+
+
